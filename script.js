@@ -31,39 +31,28 @@ function makeAction() {
     if (codigo) {
         const url = `https://script.google.com/macros/s/AKfycbznfu0HeHVGFqW3WkBLuCgfN1AromYH4sPF-6gqdDxcuDtGTuzYx9fv034VX7Ke3qPCbg/exec`;
   
-        // Corpo da requisição, no formato JSON
         const dados = {
           email: email,
           code: codigo,
           time: new Date()
         };
       
-        // Realizando a requisição POST
         fetch(url, {
-          method: 'POST', // Especifica o método POST
-          headers: {
-            'Content-Type': 'application/json' // Especifica que o conteúdo enviado é em formato JSON
-          },
-          body: JSON.stringify(dados) // Converte os dados para JSON e envia no corpo da requisição
+          method: 'POST',
+          body: JSON.stringify(dados)
         })
-        .then(response => response.json()) // Converte a resposta da API em JSON
+        .then(response => response.json())
         .then(data => {
-          // Aqui você pode tratar a resposta
           if (data.status === 'sucesso') {
             console.log('Dados gravados com sucesso!');
+            alert(`Ação realizada com o código: ${codigo}`);
           } else {
             console.log('Erro:', data.mensagem);
           }
         })
         .catch(error => {
-          // Caso ocorra algum erro na requisição
           console.error('Erro na requisição:', error);
         });
-
-        // Simula a chamada de outro serviço ou ação
-        alert(`Ação realizada com o código: ${codigo}`);
-        // Aqui você pode colocar a lógica da chamada para um serviço externo, por exemplo:
-        // fetch('https://api.exemplo.com', { method: 'POST', body: JSON.stringify({ code: codigo }) });
     } else {
         alert('Código não encontrado!');
     }
